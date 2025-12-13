@@ -44,9 +44,9 @@ const ResumeWebsite = () => {
       location: "Bengaluru, India"
     },
     socials: {
-      linkedin: "https://linkedin.com", 
-      github: "https://github.com",   
-      leetcode: "https://leetcode.com"  
+      linkedin: "https://www.linkedin.com/in/dhananjay-sarathe-835434149/", 
+      github: "https://github.com/DhananjaySarathe",   
+      leetcode: "https://leetcode.com/dhananjaysarathe26/"  
     }
   };
 
@@ -82,10 +82,12 @@ const ResumeWebsite = () => {
       location: "Bengaluru",
       description: "Co-founded and scaled AI-driven AdTech startup. Building an ecosystem for research, creation, and publishing of ads on Meta.",
       achievements: [
-        "Designed and implemented a Next.js-based scalable frontend architecture, reducing page load times by 30%.",
-        "Built Ad Inspiration Library with 1M+ ads indexed.",
-        "Developed 'Eve', an analytics module providing deep campaign insights by categorizing creatives into marketing funnels.",
-        "Created ADAM (SPY Agents) for daily live scraping of competitor brands and automated performance analysis."
+        "Designed and implemented a Next.js-based scalable frontend architecture, reducing page load times by 30% and enabling multi-domain integrations.",
+        "Built Ad Inspiration Library with 1M+ ads indexed, improving marketers' ability to research ad trends.",
+        "Developed the Discover feature, allowing users to search ads across multiple platforms with powerful filters for precise targeting.",
+        "Implemented a real-time Live Search system to scrape and analyze Meta ads, providing detailed insights (e.g., quality rating, hook identification, transcriptions).",
+        "Developed Eve, an analytics module integrating with Meta accounts to provide deep, actionable campaign insights by categorizing creatives into 4 marketing funnels.",
+        "Created ADAM (SPY Agents) that performs daily live scraping of competitor brands/keywords, providing users with fresh competitive insights along with automated performance analysis."
       ]
     },
     {
@@ -95,9 +97,10 @@ const ResumeWebsite = () => {
       location: "Remote",
       description: "Contributed as founding engineer during product inception, driving 0→1 development.",
       achievements: [
-        "Integrated AI models (OpenAI, Vision APIs) into ad-creation workflows.",
+        "Built core frontend components with Next.js + TypeScript, ensuring scalability and reusability across modules.",
+        "Integrated AI models (OpenAI, Vision APIs) into ad-creation workflows, enabling prompt-to-ad generation.",
         "Established design system & reusable UI kit, improving development speed by 40%.",
-        "Worked closely with founding members to define MVP features and accelerate product-market fit."
+        "Worked closely with founding members to define MVP features, accelerate product-market fit, and onboard early adopters."
       ]
     },
     {
@@ -107,33 +110,37 @@ const ResumeWebsite = () => {
       location: "Remote",
       description: "Mentored students in computer science fundamentals.",
       achievements: [
-        "Mentored 100+ students in C++ and Data Structures.",
-        "Conducted 1:1 debugging sessions focusing on error detection and optimization."
+        "Mentored 100+ students in C++ and Data Structures, improving problem-solving accuracy.",
+        "Conducted 1:1 debugging sessions focusing on error detection, optimization, and best practices."
       ]
     }
   ];
 
   const projects = [
     {
-      title: "Expense Waale",
+      title: "ExpenseWaale",
       category: "FinTech Web App",
       description: "A simple and powerful expense-splitting web app with group finance management.",
       tech: ["Full Stack", "Database", "Analytics"],
+      url: "https://expensewalle.vercel.app/",
+      github: "",
       points: [
-        "Implements 'SplitSpaces' system for flats, trips, or events.",
-        "Real-time balance/settlement calculations and PDF export.",
-        "Analytics modules for spending insights and fairness scoring."
+        "Built a full-stack web application with a proper database to manage shared expenses across multiple groups using a 'SplitSpaces' system, enabling users to maintain separate expense groups for flats, trips, or events.",
+        "Implemented expense categorization, real-time balance/settlement calculations, PDF export, email report delivery, and advanced filtering across dates, members, and categories.",
+        "Built analytics modules for spending insights, category-wise consumption, contributor rankings, and fairness scoring to improve visibility and decision-making."
       ]
     },
     {
       title: "Brandbooster",
       category: "AI Analytics",
-      description: "Website providing actionable shopper insights about products or competition in 5 minutes.",
+      description: "Website that provides Actionable Shopper Insights About your Product or your Competition In 5 Minutes.",
       tech: ["AI", "Data Scraping", "Charts"],
+      url: "https://brandbooster.ai/",
+      github: "",
       points: [
-        "Generates insights from product reviews.",
-        "Competitor analysis using sentiment analysis.",
-        "Visual charts and recommendations for product sales."
+        "Insights of your products generated from reviews.",
+        "Competition analysis using Reviews.",
+        "Charts and recommendations about product sale."
       ]
     }
   ];
@@ -269,9 +276,15 @@ const ResumeWebsite = () => {
               </button>
             </div>
             <div className="flex gap-6 pt-4 text-slate-500">
-              <Github className="hover:text-white transition-colors cursor-pointer" />
-              <Linkedin className="hover:text-white transition-colors cursor-pointer" />
-              <Code className="hover:text-white transition-colors cursor-pointer" />
+              <a href={personalInfo.socials.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <Github className="cursor-pointer" />
+              </a>
+              <a href={personalInfo.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <Linkedin className="cursor-pointer" />
+              </a>
+              <a href={personalInfo.socials.leetcode} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                <Code className="cursor-pointer" />
+              </a>
             </div>
           </div>
           
@@ -419,7 +432,7 @@ const ResumeWebsite = () => {
               </div>
               <p className="text-slate-400">Some things I've built.</p>
             </div>
-            <a href="#" className="hidden md:flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
+            <a href={personalInfo.socials.github} target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
               View Github <ExternalLink size={14} />
             </a>
           </div>
@@ -431,11 +444,21 @@ const ResumeWebsite = () => {
                   <div className="flex justify-between items-start mb-6">
                     <div>
                       <span className="text-xs font-mono text-cyan-400 mb-2 block">{project.category}</span>
-                      <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">{project.title}</h3>
+                      {project.url ? (
+                        <a href={project.url} target="_blank" rel="noopener noreferrer">
+                          <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">{project.title}</h3>
+                        </a>
+                      ) : (
+                        <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">{project.title}</h3>
+                      )}
                     </div>
                     <div className="flex gap-3">
-                      <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white text-slate-400 transition-colors"><Github size={18} /></a>
-                      <a href="#" className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white text-slate-400 transition-colors"><ExternalLink size={18} /></a>
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white text-slate-400 transition-colors"><Github size={18} /></a>
+                      )}
+                      {project.url && (
+                        <a href={project.url} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 rounded-full hover:bg-white/10 hover:text-white text-slate-400 transition-colors"><ExternalLink size={18} /></a>
+                      )}
                     </div>
                   </div>
 
@@ -477,7 +500,9 @@ const ResumeWebsite = () => {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wider">Email</p>
-                    <p className="text-white font-medium">{personalInfo.contact.email}</p>
+                    <a href={`mailto:${personalInfo.contact.email}`} className="text-white font-medium hover:text-cyan-400 transition-colors">
+                      {personalInfo.contact.email}
+                    </a>
                   </div>
                 </div>
                 
