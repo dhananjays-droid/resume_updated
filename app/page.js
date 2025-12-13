@@ -32,6 +32,13 @@ const ResumeWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Resume Data
   const personalInfo = {
@@ -39,7 +46,7 @@ const ResumeWebsite = () => {
     title: "Founding Member Quickads | Software Development Engineer",
     bio: "I am a Full Stack Engineer with a passion for building scalable, AI-driven applications. As a Founding Member at Quickads, I've driven 0→1 development, scaled architectures, and integrated complex AI models into user-friendly products. I specialize in Next.js ecosystems and performance optimization.",
     contact: {
-      phone: "+91-9009990470",
+      phone: "+91 9009990470",
       email: "dhananjaysarathe26@gmail.com",
       location: "Bengaluru, India"
     },
@@ -187,6 +194,38 @@ const ResumeWebsite = () => {
       setActiveSection(id);
       setIsMenuOpen(false);
     }
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent(formData.subject || 'Contact from Portfolio');
+    const body = encodeURIComponent(
+      `Hello Dhananjay,\n\n` +
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n\n` +
+      `Message:\n${formData.message}`
+    );
+    const mailtoLink = `mailto:${personalInfo.contact.email}?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Reset form after a short delay
+    setTimeout(() => {
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setIsSubmitting(false);
+    }, 1000);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const NavLink = ({ id, label }) => (
@@ -508,6 +547,18 @@ const ResumeWebsite = () => {
                 
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-cyan-400">
+                    <Phone size={20} />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 uppercase tracking-wider">Phone</p>
+                    <a href={`tel:${personalInfo.contact.phone.replace(/\s/g, '')}`} className="text-white font-medium hover:text-cyan-400 transition-colors">
+                      {personalInfo.contact.phone}
+                    </a>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-cyan-400">
                     <MapPin size={20} />
                   </div>
                   <div>
@@ -520,27 +571,71 @@ const ResumeWebsite = () => {
 
             {/* Visual Contact Form */}
             <div className="bg-[#111] p-8 rounded-3xl border border-white/5 shadow-2xl">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleFormSubmit}>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-xs text-slate-500 uppercase font-bold">Name</label>
-                    <input type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all" placeholder="John Doe" />
+                    <input 
+                      type="text" 
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all placeholder:text-slate-600" 
+                      placeholder="John Doe" 
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs text-slate-500 uppercase font-bold">Email</label>
-                    <input type="email" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all" placeholder="john@example.com" />
+                    <input 
+                      type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all placeholder:text-slate-600" 
+                      placeholder="john@example.com" 
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs text-slate-500 uppercase font-bold">Subject</label>
-                  <input type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all" placeholder="Project Inquiry" />
+                  <input 
+                    type="text" 
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all placeholder:text-slate-600" 
+                    placeholder="Project Inquiry" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs text-slate-500 uppercase font-bold">Message</label>
-                  <textarea rows="4" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all" placeholder="Tell me about your project..."></textarea>
+                  <textarea 
+                    rows="4" 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 focus:bg-white/[0.07] transition-all placeholder:text-slate-600 resize-none" 
+                    placeholder="Tell me about your project..."
+                  ></textarea>
                 </div>
-                <button className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-4 rounded-xl hover:shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                  <Send size={18} /> Send Message
+                <button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold py-4 rounded-xl hover:shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Opening Email...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={18} /> Send Message
+                    </>
+                  )}
                 </button>
               </form>
             </div>
