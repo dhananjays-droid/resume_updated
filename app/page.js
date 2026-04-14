@@ -322,9 +322,9 @@ const ResumeWebsite = () => {
               <button onClick={() => scrollToSection('projects')} className="px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold rounded-lg transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)]">
                 View My Work
               </button>
-              <button className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white font-medium rounded-lg border border-white/10 transition-all flex items-center gap-2">
+              <a href="https://drive.google.com/file/d/1rbqqwgv6kbOiYPGGvVe-xBZfqyIHPD4k/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white font-medium rounded-lg border border-white/10 transition-all flex items-center gap-2">
                 <Download size={18} /> Resume
-              </button>
+              </a>
             </div>
             <div className="flex gap-6 pt-4 text-slate-500">
               <a href={personalInfo.socials.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
